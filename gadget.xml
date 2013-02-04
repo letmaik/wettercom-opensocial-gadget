@@ -1,0 +1,1002 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module>
+	<ModulePrefs title="Wetter von wetter.com" directory_title="Das Wetter von wetter.com" title_url="http://www.wetter.com/" description ="Das Wetter von wetter.com" author="wetter.com AG" author_email="gadget@wetter.com" author_affiliation="wetter.com AG" author_location="Singen, Deutschland" singleton="false" height="270" scaling="false" scrolling="false" screenshot="http://imgs.wetter.com/gadget/screenshot.png" thumbnail="http://imgs.wetter.com/gadget/thumbnail.png">
+		<Require feature="setprefs"/>
+		<Require feature="tabs"/>
+		<Require feature="settitle"/>
+		<Require feature="dynamic-height"/>
+	</ModulePrefs>
+	<UserPref name="id" datatype="hidden"/>
+	<UserPref name="wxf" datatype="hidden"/>
+	<UserPref name="sww" datatype="hidden"/>
+
+<Content type="html">
+<![CDATA[
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+<style type="text/css">
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td
+{
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0 none;
+	font-weight:inherit;
+	font-style:inherit;
+	font-family:verdana;
+	font-size:11px;
+	color:#036;
+}
+
+a {
+    color: #036;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:active, a:focus {
+    outline: 0;
+    -moz-outline: 0;
+}
+a:visited {
+    color: #036;
+    text-decoration: none;
+}
+
+a.link_o {
+    color: #1059C2;
+    text-decoration: none;
+}
+
+a.link_wa {
+    color: #FFF;
+    text-decoration: none;
+}
+
+
+ul {
+	margin-top:5px;
+	list-style-type:square;
+	padding-left:0px;
+	margin-left:20px;
+}
+
+ul li {
+	cursor:pointer;
+	margin:5px 0px;
+}
+
+ul li:hover {
+	color:#1059C2;
+	text-decoration:underline;
+} 
+
+
+
+/*
+Google Tabs
+*/
+
+.tablib_table {
+	border-bottom:1px solid #042C5D;
+}
+.tablib_spacerTab {
+	border-bottom:0px none;
+}
+.tablib_emptyTab {
+	border-bottom:0px none;
+}
+.tablib_selected {
+	background-color:#06418F;
+	background-image:url('http://imgs.wetter.com/gadget/back_selected.gif');
+	background-repeat:repeat-x;
+	border:1px solid #042C5D;
+	color:#FFF;
+	border-bottom:0px none;
+}
+.tablib_unselected {
+	background-color:#FFC32D;
+	background-image:url('http://imgs.wetter.com/gadget/back_unselected.gif');
+	background-repeat:repeat-x;
+	border:1px solid #C6961A;
+	border-bottom:0px none;
+	color:#036;
+}
+
+
+
+
+
+/*
+WX-Icon
+*/
+
+.wxicon{
+	width:84px;
+	height:50px;
+}
+
+.wxicon.d0{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -504px;
+}
+.wxicon.d1,.wxicon.d10{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -554px;
+}
+.wxicon.d2,.wxicon.d20{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -604px;
+}
+.wxicon.d3,.wxicon.d30{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -654px;
+}
+.wxicon.d4,.wxicon.d40,.wxicon.d41,.wxicon.d42,.wxicon.d45,.wxicon.d47{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -704px;
+}
+.wxicon.d48,.wxicon.d49{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -754px;
+}
+.wxicon.d5,.wxicon.d50,.wxicon.d51,.wxicon.d52,.wxicon.d53,.wxicon.d54,.wxicon.d58,.wxicon.d59{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -804px;
+}
+.wxicon.d55{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -854px;
+}
+.wxicon.d56{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -904px;
+}
+.wxicon.d57{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -954px;
+}
+.wxicon.d6,.wxicon.d60,.wxicon.d61,.wxicon.d63{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1004px;
+}
+.wxicon.d65{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1054px;
+}
+.wxicon.d66{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1104px;
+}
+.wxicon.d67{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1154px;
+}
+.wxicon.d68{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1204px;
+}
+.wxicon.d69{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1254px;
+}
+.wxicon.d7,.wxicon.d70,.wxicon.d71,.wxicon.d73,.wxicon.d78{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -3208px;
+}
+.wxicon.d75{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1354px;
+}
+.wxicon.d8,.wxicon.d80,.wxicon.d81{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1404px;
+}
+.wxicon.d82{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1454px;
+}
+.wxicon.d83{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1504px;
+}
+.wxicon.d84{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1554px;
+}
+.wxicon.d85{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1604px;
+}
+.wxicon.d86{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1654px;
+}
+.wxicon.d9,.wxicon.d90{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1704px;
+}
+.wxicon.d93{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1754px;
+}
+.wxicon.d95{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1704px;
+}
+.wxicon.d96{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1804px;
+}
+
+.wxicon.n0{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1854px;
+}
+.wxicon.n1,.wxicon.n10{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1904px;
+}
+.wxicon.n2,.wxicon.n20{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -1954px;
+}
+.wxicon.n3,.wxicon.n30{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2004px;
+}
+.wxicon.n4,.wxicon.n40,.wxicon.n41,.wxicon.n42,.wxicon.n45,.wxicon.n47{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2054px;
+}
+.wxicon.n48,.wxicon.n49{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2104px;
+}
+.wxicon.n5,.wxicon.n50,.wxicon.n51,.wxicon.n52,.wxicon.n53,.wxicon.n54,.wxicon.n58,.wxicon.n59{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2154px;
+}
+.wxicon.n55{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2204px;
+}
+.wxicon.n56{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2254px;
+}
+.wxicon.n57{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2304px;
+}
+.wxicon.n6,.wxicon.n60,.wxicon.n61,.wxicon.n63{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2354px;
+}
+.wxicon.n65{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2404px;
+}
+.wxicon.n66{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2454px;
+}
+.wxicon.n67{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2504px;
+}
+.wxicon.n68{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2554px;
+}
+.wxicon.n69{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2604px;
+}
+.wxicon.n7,.wxicon.n70,.wxicon.n71,.wxicon.n73{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2654px;
+}
+.wxicon.n75{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2704px;
+}
+.wxicon.n8,.wxicon.n80,.wxicon.n81{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2754px;
+}
+.wxicon.n82{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2804px;
+}
+.wxicon.n83{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2854px;
+}
+.wxicon.n84{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2904px;
+}
+.wxicon.n85{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -2954px;
+}
+.wxicon.n86{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -3004px;
+}
+.wxicon.n9,.wxicon.n90{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -3054px;
+}
+.wxicon.n93,.wxicon.n96{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -3104px;
+}
+.wxicon.n95{
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -3054px;
+}
+.wxicon.ka,.wind.kA {
+  background-image: url('http://imgs-2.wetter.com/layout/1/wx_icons/wxicons_03_l.png');
+  background-position: left -3154px;
+}
+
+.title_outer {
+	width:100%;
+	height:30px;
+	height:auto\9;
+	display:table;
+}
+.title {
+	height:30px;
+	height:auto\9;
+	width:100%;
+	display:table-cell;
+	font-size:12px;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:middle;
+}
+.w250 {
+	width:250px\9;
+	height:0px\9;
+}
+
+
+
+.day_tab {
+	height:190px;
+	overflow:hidden;
+	display:none;
+	background-image:url('http://imgs.wetter.com/gadget/background.png');
+	background-repeat:no-repeat;
+	background-position:top left;
+}
+
+.day_tab p.msg {
+	text-align:center;
+	margin-top:80px;
+	font-weight:bold;
+	display:none;
+}
+
+.day_tab p.wait {
+	text-align:center;
+	margin-top:80px;
+}
+
+.tab {
+	width:100%;
+	height:190px;
+}
+
+.tab .content {
+	width:100%;
+}
+
+.tab .content .parts {
+	width:24.9%;
+	float:left;
+}
+
+.tab .d_box {
+	height:160px;
+	min-height:160px;
+	margin:auto;
+	padding:2px 4px;
+	text-align:center;
+}
+
+.tab h2 {
+	font-size:11px;
+	font-weight:bold;
+	margin:4px 0px 10px 0px;
+	text-align:center;
+	background-color:transparent;
+}
+.tab .icon_outer {
+	position:relative;
+	width:100%;
+	height:50px;
+}
+.tab .icon_outer .icon_inner {
+	position:absolute;
+	left:50%;
+}
+.tab .icon_outer .icon_inner .wxicon {
+	position:absolute;
+	width:84px;
+	height:50px;
+	left:-42px;	
+}
+.tab .txt_outer {
+	height:40px;
+	width:100%;
+	display:table;
+}
+.tab .txt_inner {
+	height:40px;
+	width:100%;
+	display:table-cell;
+	vertical-align:middle;
+}
+.tab .temp {
+	width:100%;
+	font-weight:bold;
+	font-size:12px;
+}
+
+
+
+
+
+
+
+
+.set_tab {
+	height:190px;
+	overflow:hidden;
+	display:none;
+	background:none;
+}
+
+#bottom {
+	width:100%;
+	height:34px;
+	background-color:#FFC52B;
+	border-top:1px solid #FD9002;
+	border-bottom:1px solid #FD9002;
+}
+
+#warn {
+	width:100%;
+	margin:5px 0px 0px 0px;
+	padding:7px 0px;
+	color:#FFF;
+	background-color:red;
+	text-align:center;
+	font-weight:bold;
+	display:none;
+}
+
+#more {
+	width:40%;
+	margin-top:8px;
+	float:left;
+}
+
+#logo {
+	width:100px;
+	margin-top:5px;
+	float:right;
+}
+
+
+
+</style>
+
+
+<div id="day0" class="day_tab">
+	<p class="msg"></p>
+	<div id="tab0" class="tab"></div>
+</div>
+<div id="day1" class="day_tab">
+	<p class="msg"></p>
+	<div id="tab1" class="tab"></div>
+</div>
+<div id="day2" class="day_tab">
+	<p class="msg"></p>
+	<div id="tab2" class="tab"></div>
+</div>
+
+<div id="option" class="set_tab">
+	<div class="title_outer"><div id="title_settings" class="title">Benutzen Sie die Suchfunktion um den Standort zu aktualisieren!</div></div>
+	<div style="padding:4px 10px 2px;text-align:center;">
+		<div style="width:100%;height:24px;border:1px solid rgb(253, 144, 2);margin:auto;min-width:225px;">
+			<div style="width:100%;height:24px;position:relative;">
+				<input type="text" id="search_string" name="search" value="" style="position:absolute;left:0px;top:0px;width:85%;height:24px;font-size:14px;border:0px none;padding:2px 3px;outline:none;outline-width:0;-webkit-appearance:caret;"/><input id="search_button" type="image" src="http://imgs.wetter.com/gadget/search.jpg" style="position:absolute;right:0px;top:0px;width:68px;height:24px;border:0pt none;outline:none;"/>
+			</div>
+		</div>
+	</div>
+	<div style="padding:4px 10px 2px;">
+		<div style="width:100%;height:100px;overflow:hidden;border:1px solid #C0C0C0;">
+			<div style="height:117px;overflow:scroll;background-color:#F5F5F5;">
+				<div id="search_results"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="warn"><a id="warning" href="http://www.wetter.com/wetter_aktuell/wetterwarnungen/warnungen_aktuell/" target="_blank" class="link_wa">Wetterwarnung</a></div>
+
+<div id="bottom">
+	<form method="get" action="http://www.wetter.com/suche/" target="_blank">
+	<div style="width:100%;text-align:center;margin:4px 0px;">
+		<div style="width:240px;height:24px;border:1px solid rgb(253, 144, 2);margin:auto;padding:0;background-color:white;">
+			<div style="width:240px;height:24;position:relative;">
+				<input type="text" id="search" name="search" style="position:absolute;left:0px;top:1px;width:166px;height:22px;font-size:12px;border:0pt none;padding:2px 3px;outline:none;-webkit-appearance:caret;"/><input id="search_submit" type="image" src="http://imgs.wetter.com/gadget/search.jpg" style="width:68px;height:24px;border:0pt none;margin:0;padding:0;outline:none;position:absolute;right:0px;top:0px;"/>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+<div>
+	<div id="more"></div>
+	<div id="logo"><a href="http://www.wetter.com/" target="_blank"><img src="http://imgs.wetter.com/gadget/logo.png"></a></div>
+	<div style="clear:both;"></div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+
+var days = ['day0', 'day1', 'day2'];
+var daytimes = ['mo', 'no', 'ev', 'ni'];
+var weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+var prefs = new gadgets.Prefs();
+var tabs = new gadgets.TabSet(__MODULE_ID__, 'option');
+var container;
+var url = {
+	wxf: '',
+	sww: '',	
+	loc: 'http://igoogle.wetter.com/loc.php',
+	get: 'http://igoogle.wetter.com/get.php',
+	sep: '?'
+};
+
+
+
+
+
+
+
+function createTabs() {
+	tabs.addTab('Heute', 'day0');
+	tabs.addTab(weekdays[(new Date(new Date().getTime() + 86400000)).getDay()], 'day1');
+	tabs.addTab(weekdays[(new Date(new Date().getTime() + 172800000)).getDay()], 'day2');
+	tabs.addTab('Einstellungen', 'option');
+	tabs.setSelectedTab(0);
+};
+
+function recreateTabs() {
+	var tbs = tabs.getTabs();
+	for (key in tbs) {
+		var idx = tbs[key];
+		var ttl = idx.td_;
+		if (key<=2) {
+			var dp = container.data.forecast.parsed['day'+key].date.split(".");
+			var nd = new Date(dp[2], (dp[1]-1), dp[0]).getDay();
+			var jd = new Date().getDay();
+			var tt = (nd==jd) ? 'Heute' : weekdays[nd];
+			ttl.innerText = tt;
+		}
+	}
+};
+
+function initContainer() {
+	delete container;
+	container = {
+		code:'',
+		locality:'',
+		url:'',
+		
+		country:'',
+		post_code:'',
+		
+		data:{
+			forecast:{
+				parsed:{}
+			},
+			forecast_updated:false,
+			warning:{
+				parsed:{}
+			},
+			warning_updated:false
+		},
+		
+		search:{}
+	};
+};
+
+function initUrl() {
+	url.wxf = '';
+	url.sww = '';
+};
+
+
+function getPrefs() {
+	url.wxf = prefs.getString('wxf');
+	url.sww = prefs.getString('sww');
+	container.code = prefs.getString('id');
+};
+function savePrefs() {
+	prefs.set('wxf', url.wxf);
+	prefs.set('sww', url.sww);
+	prefs.set('id', container.code);
+};
+function saveUrls() {
+	prefs.set('wxf', url.wxf);
+	prefs.set('sww', url.sww);
+};
+function saveLocation() {
+	prefs.set('id', container.code);
+};
+
+
+
+function StartAfterLoad() {
+	initContainer();
+	initUrl();
+	getPrefs();
+	if (container.code=='' || container.code=='undefined') {
+		show('Wählen Sie bitte unter <a href="javascript:tabs.setSelectedTab(3);" class="link_o">Einstellungen</a> ihren Standort.');
+		$('#title_settings').html('Bestimmen Sie bitte Ihren Standort!');
+		$('#search_results').html('<div style="width:100%;margin-top:25px;text-align:center;">Benutzen Sie die Suchfunktion um den Standort zu bestimmen!<br>Tragen Sie den Ort und/oder die PLZ ein und klicken Sie auch <b>Suchen</b>.</div>');
+		tabs.setSelectedTab(3);
+	} else {
+		checkUrls();
+	}
+};
+
+function StartAfterSearch() {
+	initUrl();
+	getUrls();
+};
+
+function getCode() {
+	var params = {};
+	params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+	var uri = url.loc+url.sep+'q='+encodeURIComponent(container.locality);
+	gadgets.io.makeRequest(uri, responseGetCode, params);
+};
+
+function responseGetCode(obj) {
+	if (obj.errors.length == 0) {
+		container.search = obj.data.search;
+		showSearch();
+	} else {
+		show('Fehler beim Abruf des Standortcodes.<br>Fehlercode: E002');
+	}
+};
+
+function checkUrls() {
+	if (url.wxf=='' || url.wxf=='undefined' || url.sww=='' || url.sww=='undefined') {
+		getUrls();		
+	} else {
+		checkData();
+	}
+};
+
+function getUrls() {
+	var params = {};
+	params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+	var uri = url.get+url.sep+'c='+encodeURIComponent(container.code);
+	gadgets.io.makeRequest(uri, responseGetUrls, params);
+};
+
+function responseGetUrls(obj) {
+	if (obj.errors.length == 0) {
+		if (typeof obj.data.success == 'object') {
+			url.wxf = obj.data.success.wxf;
+			url.sww = obj.data.success.sww;
+			saveUrls();
+			checkUrls();
+		} else {
+			show('Fehler beim Abruf der Code-Urls.<br>Fehlercode: E003');
+		}
+	} else {
+		show('Fehler beim Abruf der Code-Urls.<br>Fehlercode: E004');
+	}
+};
+
+function checkData() {
+	if (container.data.forecast_updated==false) checkForecastData();
+	if (container.data.warning_updated==false) checkWarningData();	
+	if (container.data.forecast_updated==true && container.data.warning_updated==true) {
+		recreateTabs();
+		document.getElementById('more').innerHTML = '<a href="http://www.wetter.com/'+container.url+'" target="_blank">» weitere Werte</a>';
+		gadgets.window.setTitle('Das Wetter für '+container.locality);
+		gadgets.window.adjustHeight();
+		tabs.setSelectedTab(0);
+	} else {
+		setTimeout("checkData()", 1000);
+	}
+}
+
+
+
+
+
+
+function checkForecastData() {
+	show('<img src="http://imgs.wetter.com/gadget/loadingAnimation.gif" alt=""><br>Daten werden geladen');
+	getForecastData();
+};
+
+function getForecastData() {
+	var params = {};
+	params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.JSON;
+	var uri = url.wxf;
+	gadgets.io.makeRequest(uri, responseGetForecastData, params);
+};
+
+function responseGetForecastData(obj) {
+	if (obj.errors.length == 0) {
+		if (typeof obj.data.city.forecast == 'object') {
+			container.data.forecast = obj.data.city;
+			container.data.forecast_updated = true;
+			parseForecastData();
+		} else {
+			show('Die Vorgersagedaten konnten nicht abgerufen werden!<br>Fehlercode: E007');
+		}
+	} else {
+		show('Die Vorgersagedaten konnten nicht abgerufen werden!<br>Fehlercode: E008');
+	}
+};
+
+function parseForecastData() {
+	container.locality = container.data.forecast.name;
+	container.url = container.data.forecast.url;	
+	
+	container.data.forecast.parsed = {};
+	var a = 0;	
+	for (key in container.data.forecast.forecast) {
+		var dp = key.split("-");
+		var nd = new Date(dp[0], (dp[1]-1), dp[2]);
+		var val = container.data.forecast.forecast[key];
+		container.data.forecast.parsed[days[a]] = {
+			'date': dp[2]+'.'+dp[1]+'.'+dp[0],
+			'weekday': weekdays[nd.getDay()],
+			't': val.tx,
+			'tx': val.tx,
+			'tn': val.tn,
+			'w': val.w,
+			'w_txt': val.w_txt
+		}
+		var b = 0;
+		for (subkey in val) {
+			var subval = container.data.forecast.forecast[key][subkey];
+			if (typeof subval == 'object') {
+				container.data.forecast.parsed['day'+a][daytimes[b]] = {
+					't': subval.tx,
+					'tx': subval.tx,
+					'tn': subval.tn,
+					'w': subval.w,
+					'w_txt': subval.w_txt
+				}
+				b++;
+			}
+		}
+		a++;
+	}
+	
+	document.getElementById('day0').innerHTML = createDayHTML(container.data.forecast.parsed['day0']);
+	document.getElementById('day1').innerHTML = createDayHTML(container.data.forecast.parsed['day1']);
+	document.getElementById('day2').innerHTML = createDayHTML(container.data.forecast.parsed['day2']);
+	
+};
+
+function createDayHTML(obj) {
+	
+	var lo = container.locality;
+	var wd = obj['weekday'];
+	var da = obj['date'];
+	
+	var html = '';
+	html += '<div class="tab">';
+	html += '<div class="title_outer"><div class="title">'+lo+' am '+wd+', den '+da+'</div></div>';
+	html += '<div class="w250"></div>';
+	html += '<div class="content">';
+	html += '<div class="parts">';
+	html += '<div class="d_box">';
+	html += '<h2>Morgens</h2>';
+	html += '<div class="icon_outer"><div class="icon_inner"><div class="icon wxicon d'+obj['mo']['w']+'"></div></div></div>';
+	html += '<div class="txt_outer"><div class="txt_inner">'+obj['mo']['w_txt']+'</div></div>';
+	html += '<div class="temp">'+obj['mo']['tn']+' / '+obj['mo']['tx']+'°C</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="parts">';
+	html += '<div class="d_box">';
+	html += '<h2>Mittags</h2>';
+	html += '<div class="icon_outer"><div class="icon_inner"><div class="icon wxicon d'+obj['no']['w']+'"></div></div></div>';
+	html += '<div class="txt_outer"><div class="txt_inner">'+obj['no']['w_txt']+'</div></div>';
+	html += '<div class="temp">'+obj['no']['tn']+' / '+obj['no']['tx']+'°C</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="parts">';
+	html += '<div class="d_box">';
+	html += '<h2>Abends</h2>';
+	html += '<div class="icon_outer"><div class="icon_inner"><div class="icon wxicon d'+obj['ev']['w']+'"></div></div></div>';
+	html += '<div class="txt_outer"><div class="txt_inner">'+obj['ev']['w_txt']+'</div></div>';
+	html += '<div class="temp">'+obj['ev']['tn']+' / '+obj['ev']['tx']+'°C</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="parts">';
+	html += '<div class="d_box last">';
+	html += '<h2>Nachts</h2>';
+	html += '<div class="icon_outer"><div class="icon_inner"><div class="icon wxicon n'+obj['ni']['w']+'"></div></div></div>';
+	html += '<div class="txt_outer"><div class="txt_inner">'+obj['ni']['w_txt']+'</div></div>';
+	html += '<div class="temp">'+obj['ni']['tn']+' / '+obj['ni']['tx']+'°C</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	return html;
+	
+};
+
+function checkWarningData() {
+	document.getElementById('warn').style.display = 'none';		
+	if (container.code.substring(0,2)=='DE') {
+		getWarningData();
+	} else {
+		container.data.warning_updated = true;
+		container.data.warning.parsed.active = false;
+	}
+};
+
+function getWarningData() {
+	var params = {};
+	params[gadgets.io.RequestParameters.CONTENT_TYPE] = gadgets.io.ContentType.TEXT;
+	var uri = url.sww;
+	gadgets.io.makeRequest(uri, responseGetWarningData, params);
+};
+
+function responseGetWarningData(obj) {
+	if (obj.errors.length == 0) {
+		var txt = obj.text.replace(/(\s)/g, ' ').replace(/(\s{2,})/g, ' ');
+		var json = gadgets.json.parse(txt);
+		if (typeof json.city.forecast == 'array' || json.city.forecast.length > 0) {
+			container.data.warning = json.city;
+		}
+		container.data.warning_updated = true;
+		parseWarningData();
+	} else {
+		show('Die Wetterwarnungen-Daten konnten nicht abgerufen werden!<br>Fehlercode: E009');
+	}
+};
+
+function parseWarningData() {
+	container.data.warning.parsed = {};
+	if ((typeof container.data.warning.forecast=='array' || typeof container.data.warning.forecast=='object') && container.data.warning.forecast.length>0) {
+		var a=0,b=0;
+		for (key in container.data.warning.forecast) {
+			var val = container.data.warning.forecast[key];
+			if (val.warn_weight>b) {
+				b=val.warn_weight;
+				a=key;
+			}
+		}		
+		container.data.warning.parsed.active = true;
+		
+		document.getElementById('warning').innerHTML = container.data.warning.forecast[a].intensity_name;
+		document.getElementById('warn').style.display = 'block';
+	} else {
+		container.data.warning.parsed.active = false;
+	}
+};
+
+
+
+
+function show(message) {
+	document.getElementById('day0').innerHTML = '<p class="wait">'+message+'</p>';
+	document.getElementById('day1').innerHTML = '<p class="wait">'+message+'</p>';
+	document.getElementById('day2').innerHTML = '<p class="wait">'+message+'</p>';
+}
+
+
+
+
+
+
+function saveOption(code) {
+	show('<img src="http://imgs.wetter.com/gadget/loadingAnimation.gif" alt=""><br>Bitte warten...');
+	initContainer();
+	container.code = decodeURIComponent(code);
+	saveLocation();
+	cleanSearch();
+	StartAfterSearch();
+};
+
+function cleanSearch() {
+	$('#title_settings').html('Benutzen Sie die Suchfunktion um den Standort zu aktualisieren!');
+	$('#search_string').val('');
+	$('#search_results').html('');
+};
+
+function doSearch() {
+	var search_string = $('#search_string').val();
+	if (search_string.length>1 && search_string.length<64) {
+		initContainer();
+		initUrl();
+		container.locality = search_string;
+		getCode();
+	} else {
+		alert('Error: Ihr Suchbegriff ist zu kurz');
+		return false;
+	}	
+};
+
+function showSearch() {
+	$('#search_results').empty();
+	if (typeof container.search.result=='object' && container.search.result.length > 0) {
+		$('#title_settings').html('Wählen Sie bitte Ihren Standort aus der unteren Liste aus.');
+		var out = '<ul>';
+		$.each(container.search.result, function (key, val) {
+			out += '<li onclick="saveOption(\''+encodeURIComponent(val.city_code)+'\')">'+val.plz+' '+val.name+' ('+val.adm_2_name;
+			if (val.adm_1_name!='' && val.adm_1_name!=undefined) { out += ', '+val.adm_1_name; }
+			out += ')</li>';
+		});
+		out += '</ul>';
+		$('#search_results').html(out);
+	} else {
+		$('#title_settings').html('Führen Sie bitte die Suche erneut durch.');
+		if (container.search.search_string=='undefined' || container.search.search_string=='') {
+			$('#search_results').html('');
+		} else {
+			$('#search_results').html('<div style="width:100%;margin-top:25px;text-align:center;">Die Suche nach <b>'+container.search.search_string+'</b> war erfolgslos!</div>');
+		}
+	}
+};
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+	$('#search_button').click(function(e) {
+		doSearch();
+	});	
+	$('#search_string').keypress(function(e) {
+		if (e.which==13) {
+			doSearch();
+		}
+	});	
+});
+
+function init() {
+	createTabs();
+	StartAfterLoad();
+}
+
+gadgets.util.registerOnLoadHandler(init);
+
+
+
+
+
+
+</script>
+
+]]>
+</Content>
+</Module>
