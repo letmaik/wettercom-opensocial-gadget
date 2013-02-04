@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Module>
-	<ModulePrefs title="Wetter von wetter.com" directory_title="Das Wetter von wetter.com" title_url="http://www.wetter.com/" description ="Das Wetter von wetter.com" author="wetter.com AG" author_email="gadget@wetter.com" author_affiliation="wetter.com AG" author_location="Singen, Deutschland" singleton="false" height="270" scaling="false" scrolling="false" screenshot="http://imgs.wetter.com/gadget/screenshot.png" thumbnail="http://imgs.wetter.com/gadget/thumbnail.png">
+	<ModulePrefs title="Wetter von wetter.com" directory_title="Das Wetter von wetter.com" title_url="http://www.wetter.com/" description ="Das Wetter von wetter.com" author="wetter.com AG" author_email="gadget@wetter.com" author_affiliation="wetter.com AG" author_location="Singen, Deutschland" singleton="false" height="226" scaling="false" scrolling="false" screenshot="http://imgs.wetter.com/gadget/screenshot.png" thumbnail="http://imgs.wetter.com/gadget/thumbnail.png">
 		<Require feature="setprefs"/>
 		<Require feature="tabs"/>
 		<Require feature="settitle"/>
@@ -50,7 +50,7 @@ a.link_o {
     text-decoration: none;
 }
 
-a.link_wa {
+a.link_wa, a.link_wa span {
     color: #FFF;
     text-decoration: none;
 }
@@ -368,12 +368,12 @@ WX-Icon
 
 
 .day_tab {
-	height:190px;
+	height:150px;
 	overflow:hidden;
 	display:none;
 	background-image:url('http://imgs.wetter.com/gadget/background.png');
 	background-repeat:no-repeat;
-	background-position:top left;
+	background-position: 0 -30px;
 }
 
 .day_tab p.msg {
@@ -390,7 +390,7 @@ WX-Icon
 
 .tab {
 	width:100%;
-	height:190px;
+	height:150px;
 }
 
 .tab .content {
@@ -457,7 +457,7 @@ WX-Icon
 
 
 .set_tab {
-	height:190px;
+	height:150px;
 	overflow:hidden;
 	display:none;
 	background:none;
@@ -522,8 +522,8 @@ WX-Icon
 		</div>
 	</div>
 	<div style="padding:4px 10px 2px;">
-		<div style="width:100%;height:100px;overflow:hidden;border:1px solid #C0C0C0;">
-			<div style="height:117px;overflow:scroll;background-color:#F5F5F5;">
+		<div style="width:100%;height:80px;overflow:hidden;border:1px solid #C0C0C0;">
+			<div style="height:97px;overflow:scroll;background-color:#F5F5F5;">
 				<div id="search_results"></div>
 			</div>
 		</div>
@@ -532,17 +532,6 @@ WX-Icon
 
 <div id="warn"><a id="warning" href="http://www.wetter.com/wetter_aktuell/wetterwarnungen/warnungen_aktuell/" target="_blank" class="link_wa">Wetterwarnung</a></div>
 
-<div id="bottom">
-	<form method="get" action="http://www.wetter.com/suche/" target="_blank">
-	<div style="width:100%;text-align:center;margin:4px 0px;">
-		<div style="width:240px;height:24px;border:1px solid rgb(253, 144, 2);margin:auto;padding:0;background-color:white;">
-			<div style="width:240px;height:24;position:relative;">
-				<input type="text" id="search" name="search" style="position:absolute;left:0px;top:1px;width:166px;height:22px;font-size:12px;border:0pt none;padding:2px 3px;outline:none;-webkit-appearance:caret;"/><input id="search_submit" type="image" src="http://imgs.wetter.com/gadget/search.jpg" style="width:68px;height:24px;border:0pt none;margin:0;padding:0;outline:none;position:absolute;right:0px;top:0px;"/>
-			</div>
-		</div>
-	</div>
-	</form>
-</div>
 <div>
 	<div id="more"></div>
 	<div id="logo"><a href="http://www.wetter.com/" target="_blank"><img src="http://imgs.wetter.com/gadget/logo.png"></a></div>
@@ -809,7 +798,6 @@ function createDayHTML(obj) {
 	
 	var html = '';
 	html += '<div class="tab">';
-	html += '<div class="title_outer"><div class="title">'+lo+' am '+wd+', den '+da+'</div></div>';
 	html += '<div class="w250"></div>';
 	html += '<div class="content">';
 	html += '<div class="parts">';
@@ -884,17 +872,26 @@ function responseGetWarningData(obj) {
 function parseWarningData() {
 	container.data.warning.parsed = {};
 	if ((typeof container.data.warning.forecast=='array' || typeof container.data.warning.forecast=='object') && container.data.warning.forecast.length>0) {
-		var a=0,b=0;
+		var a=0,a2=-1,b=0;
 		for (key in container.data.warning.forecast) {
 			var val = container.data.warning.forecast[key];
 			if (val.warn_weight>b) {
 				b=val.warn_weight;
 				a=key;
 			}
-		}		
+		}
+		for (key in container.data.warning.forecast) {
+			var val = container.data.warning.forecast[key];
+			if (val.warn_weight==b) {
+				a2=key;
+			}
+		}
 		container.data.warning.parsed.active = true;
 		
-		document.getElementById('warning').innerHTML = container.data.warning.forecast[a].intensity_name;
+		document.getElementById('warning').innerHTML = container.data.warning.forecast[a].intensity_name + ": <span title='" + container.data.warning.forecast[a].content + "'>" + container.data.warning.forecast[a].warn_short + "</span>";
+		if (a2 != -1) {
+			document.getElementById('warning').innerHTML+= ", <span title='" + container.data.warning.forecast[a2].content + "'>" + container.data.warning.forecast[a2].warn_short + "</span>";
+		}
 		document.getElementById('warn').style.display = 'block';
 	} else {
 		container.data.warning.parsed.active = false;
