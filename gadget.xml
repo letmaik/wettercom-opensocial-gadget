@@ -882,7 +882,7 @@ function parseWarningData() {
 		}
 		for (key in container.data.warning.forecast) {
 			var val = container.data.warning.forecast[key];
-			if (val.warn_weight==b) {
+			if (key!=a && val.warn_weight==b) {
 				a2=key;
 			}
 		}
